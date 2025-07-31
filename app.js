@@ -41,10 +41,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  secret: 'ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy',
+  secret: process.env.SESSION_SECRET || 'default_secret',
+  name: 'session_id',
   cookie: {
-    secure: false,
-    maxAge: 99999999999
+    httpOnly: true,
+    secure: app.get('env') === 'production',
+    maxAge: 3600000, // 1 hour
+    domain: 'yourdomain.com', // replace with your domain
+    path: '/'
   }
 }));
 
