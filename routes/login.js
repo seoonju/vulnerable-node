@@ -33,6 +33,12 @@ router.post('/login/auth', function(req, res) {
                 returnurl = "/";
             }
 
+            // Validate returnurl against an allow-list
+            const allowedUrls = ["/", "/home", "/dashboard"];
+            if (!allowedUrls.includes(returnurl)) {
+                returnurl = "/";
+            }
+
             res.redirect(returnurl);
         })
         .catch(function (err) {
